@@ -405,10 +405,14 @@ function syncSideUI() {
 
 function setBodyColor(color, name = 'カスタム') {
   const isClear = color === 'clear';
+  const isFrosted = color === 'frosted';
+  const isCustomColor = name === 'カスタム';
   state.bodyColor = color;
   if (isClear) {
     // Clear, lightly blue-tinted acrylic. Printing remains on the outer decal layers and stays readable.
     plasticMaterial.color.set('#e8fbff');
+    plasticMaterial.emissive.set('#0c2530');
+    plasticMaterial.emissiveIntensity = 0.06;
     plasticMaterial.transparent = true;
     // Two plastic faces overlap in an extruded tag, so a low per-face alpha is needed for a genuinely see-through finish.
     plasticMaterial.opacity = 0.035;
@@ -418,8 +422,25 @@ function setBodyColor(color, name = 'カスタム') {
     plasticMaterial.roughness = 0.05;
     plasticMaterial.clearcoat = 0.90;
     plasticMaterial.clearcoatRoughness = 0.06;
+  } else if (isFrosted) {
+    // A milky translucent acrylic: enough transparency for the background to remain visible.
+    plasticMaterial.color.set('#8ee4f1');
+    plasticMaterial.emissive.set('#4fbccc');
+    plasticMaterial.emissiveIntensity = 0.16;
+    plasticMaterial.transparent = true;
+    plasticMaterial.opacity = 0.42;
+    plasticMaterial.transmission = 0;
+    plasticMaterial.thickness = 0;
+    plasticMaterial.depthWrite = false;
+    plasticMaterial.roughness = 0.13;
+    plasticMaterial.clearcoat = 0.76;
+    plasticMaterial.clearcoatRoughness = 0.10;
   } else {
     plasticMaterial.color.set(color);
+    // A small self-illumination compensation keeps browser color-picker selections close to their chosen HEX value.
+    // Custom colors receive a little more compensation because users expect the picker swatch and the 3D plastic to match.
+    plasticMaterial.emissive.set(color);
+    plasticMaterial.emissiveIntensity = isCustomColor ? 0.20 : 0.07;
     plasticMaterial.transparent = false;
     plasticMaterial.opacity = 1;
     plasticMaterial.transmission = 0;
@@ -605,7 +626,12 @@ function buildTransparentExport(sideName) {
 
   ctx.save();
   addCanvasKeyPath(ctx);
-  ctx.fillStyle = state.bodyColor === 'clear' ? 'rgba(232, 251, 255, 0.08)' : state.bodyColor;
+  const exportBodyColor = state.bodyColor === 'clear'
+    ? 'rgba(232, 251, 255, 0.08)'
+    : state.bodyColor === 'frosted'
+      ? 'rgba(142, 228, 241, 0.42)'
+      : state.bodyColor;
+  ctx.fillStyle = exportBodyColor;
   ctx.fill('evenodd');
   ctx.restore();
   // The existing surface canvas already contains the image first and text as the topmost layer.

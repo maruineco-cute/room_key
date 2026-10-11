@@ -65,6 +65,8 @@ h3 { margin: 0; font-size: 12px; letter-spacing: .02em; }
 .circle-sample { width: 27px; height: 27px; border-radius: 50%; }
 
 .swatches { display: flex; align-items: center; gap: 10px; }
+.frosted-swatch { position: relative; overflow: hidden; background: linear-gradient(135deg, #76d9e8, #d4fbff); }
+.frosted-swatch::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; background: rgba(255,255,255,.30); }
 .clear-swatch { position: relative; overflow: hidden; background: conic-gradient(#e7f9ff 0 25%, #b8e5f0 0 50%, #f8ffff 0 75%, #c8edf5 0); }
 .clear-swatch::after { content: ''; position: absolute; inset: 5px; border-radius: 50%; border: 1px solid rgba(45, 104, 120, .5); background: rgba(255,255,255,.38); }
 .swatch { width: 27px; height: 27px; padding: 0; border-radius: 50%; border: 1px solid rgba(26,34,46,.12); background: var(--swatch); box-shadow: inset 0 0 0 2px rgba(255,255,255,.26); transition: transform .2s, box-shadow .2s; }
@@ -121,7 +123,7 @@ input[type="color"] { width: 25px; height: 25px; padding: 1px; border: 1px solid
 .preview-icon { display: inline-block; margin-right: 7px; color: #ecb86e; font-size: 16px; vertical-align: -1px; }
 .recenter-button { padding: 6px 9px; color: #b9c2d1; border: 1px solid rgba(255,255,255,.13); border-radius: 6px; background: rgba(255,255,255,.05); font-size: 10px; transition: .2s; }
 .recenter-button:hover { color: white; background: rgba(255,255,255,.12); }
-.canvas-wrap { position: relative; min-height: 500px; touch-action: none; overflow: hidden; background: linear-gradient(rgba(216, 234, 252, .027) 1px, transparent 1px), linear-gradient(90deg, rgba(216, 234, 252, .027) 1px, transparent 1px), radial-gradient(circle at 52% 46%, #344155 0, #192332 39%, #111822 76%); background-size: 42px 42px, 42px 42px, auto; }
+.canvas-wrap { position: relative; min-height: 500px; touch-action: none; overflow: hidden; background: linear-gradient(rgba(240, 249, 255, .065) 1px, transparent 1px), linear-gradient(90deg, rgba(240, 249, 255, .065) 1px, transparent 1px), radial-gradient(circle at 52% 46%, #819bb1 0, #587188 42%, #324558 78%); background-size: 42px 42px, 42px 42px, auto; }
 .three-mount { position: absolute; inset: 0; z-index: 2; }
 .three-mount canvas { display: block; width: 100%; height: 100%; outline: none; }
 .scroll-lane { display: none; }
